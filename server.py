@@ -7,6 +7,9 @@ import socket,sys,os,signal,time,select
 '''
 		COTE SERVEUR 
 '''
+
+
+
 def envoie_message (sock, message):
 	# Cette fonction me permet d'envoyer des messages entre les clients 
 	for socket in liste_de_connection:
@@ -59,4 +62,4 @@ if __name__ == "__main__":
 					socket.close()
 					liste_de_connection.remove(socket)
 					continue
-	server_socket.close()
+	server.close()
