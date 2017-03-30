@@ -6,6 +6,18 @@ import socket, sys,os,signal,time,select
 '''
 		COTE CLIENT 
 '''
+
+# Le traitant
+def traitant(signal, frame):
+    '''
+    Le traitant permet de cloturer notre serveur avec CTRL+C
+    '''
+    server.close()
+
+#ici on souhaite attraper le signal CTRL C à l'aide du traitant
+signal.signal(signal.SIGINT, traitant)
+
+
 def envoie_message (sock, message):
 	# Cette fonction me permet d'envoyer des messages entre les clients 
 	for socket in liste_de_connection:
@@ -61,4 +73,5 @@ if __name__ == "__main__":
 			else :
 				# j'envoie un message 
 				msg = sys.stdin.readline()
-				server.send(nom_client +" : " + msg) #nom_client pour afficher le message au début
+				server.send(nom_client +" : " + msg) #nom_client pour afficher le nom au début
+	server.close()
