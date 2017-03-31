@@ -7,21 +7,18 @@ import socket, sys,os,signal,time,select
 		COTE CLIENT 
 '''
 
-# Le traitant
-def traitant(signal, frame):
-    '''
-    Le traitant permet de cloturer notre serveur avec CTRL+C
-    '''
-    server.close()
+def handler(sig,frame):
+	print"Signal SIGINT recu fermeture du client"
+	server.close()
+	sys.exit(0)
 
 #ici on souhaite attraper le signal CTRL C à l'aide du traitant
-signal.signal(signal.SIGINT, traitant)
-
+signal.signal(signal.SIGINT, handler)
 
 def envoie_message (sock, message):
 	# Cette fonction me permet d'envoyer des messages entre les clients 
 	for socket in liste_de_connection:
-		if socket != server_socket:
+		if socket != server:
 			# on eassaye d'envoyer le message
 			try :
 				socket.send(message)
@@ -45,7 +42,6 @@ if __name__ == "__main__":
 	nom_client =  str((sys.argv[3])) # nom du nouveau client qui sait connecter
 	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	running = 1
-	liste_de_connection.append(server)
 
 	# Tentative de connection
 	try :
@@ -55,10 +51,8 @@ if __name__ == "__main__":
 		print 'Connexion échoué avec le serveur'
 		sys.exit()
 
-	#sys.stdout.write(nom_client); sys.stdout.flush()
-
 	while running:
-		liste_de_connection.append(sys.stdin)
+		liste_de_connection = [sys.stdin,server]
 		inputready,outputready,exceptready = select.select(liste_de_connection,[],[])
 		for sock in inputready:
 			if sock == server:
@@ -75,3 +69,5 @@ if __name__ == "__main__":
 				msg = sys.stdin.readline()
 				server.send(nom_client +" : " + msg) #nom_client pour afficher le nom au début
 	server.close()
+
+

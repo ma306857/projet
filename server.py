@@ -8,8 +8,6 @@ import socket,sys,os,signal,time,select
 		COTE SERVEUR 
 '''
 
-
-
 def envoie_message (sock, message):
 	# Cette fonction me permet d'envoyer des messages entre les clients 
 	for socket in liste_de_connection:
@@ -47,12 +45,12 @@ if __name__ == "__main__":
 				client, address = server.accept() # on accepte le client
 				liste_de_connection.append(client) # on ajoute le nouveau client dans la liste des sockets
 				nb_client_conecte =nb_client_conecte + 1 # Nouveau client vient d'arriver, on incremente
-				print "Le client (%s, %s) est connecté" % address
+				print "Le client (%s, %s) est connecté" % address # permet de suivre les clients qui se connecte sur le serveur
 			else:
 				# On traite les messages reçu du client
 				message = socket.recv(SIZE)
-				print"test de l’envoi d’un message avec %d clients connectés: ok" % nb_client_conecte
 				try:
+					print"test de l’envoi d’un message avec %d clients connectés: ok" % nb_client_conecte
 					if message:
 						envoie_message(socket, "\r" + message)                 
 				except:
