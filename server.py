@@ -1,5 +1,6 @@
 #!/usr/bin/python
 #-*- coding: Utf-8 -*-
+
 import socket,sys,os,signal,time,select
 
 # faire attention a la primitive #ACCEPT car elle est BLOQUANTE (cf cours)
@@ -31,33 +32,28 @@ if __name__ == "__main__":
 	SIZE = 4096
 	HOST = '127.0.0.1'
 	PORT = int(sys.argv[1]) #int par ce que sys.argv[] rend un str, Ici on rentre le numéro du port
-	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # crée un object socket
-	server.bind((HOST,PORT)) #association host et du port
-	server.listen(10)
-	liste_de_connection.append(server)
+	irc_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # crée un object socket
+	irc_sock.bind((HOST,PORT)) #association host et du port
+	irc_sock.listen(10)
+	liste_de_connection = [irc_sock]
 	running = 1
-	nb_client_conecte = 0 # nombre de client conecté
 
 	while running:
 		inputready,outputready,exceptready = select.select(liste_de_connection,[],[])
 		for socket in inputready: #On a une nouvelle connection sur le serveur
-			if socket == server:
-				client, address = server.accept() # on accepte le client
+			if socket == irc_sock:
+				client, address = irc_sock.accept() # on accepte le client
 				liste_de_connection.append(client) # on ajoute le nouveau client dans la liste des sockets
-				nb_client_conecte =nb_client_conecte + 1 # Nouveau client vient d'arriver, on incremente
 				print "Le client (%s, %s) est connecté" % address # permet de suivre les clients qui se connecte sur le serveur
 			else:
 				# On traite les messages reçu du client
 				message = socket.recv(SIZE)
-				try:
-					print"test de l’envoi d’un message avec %d clients connectés: ok" % nb_client_conecte
-					if message:
-						envoie_message(socket, "\r" + message)                 
-				except:
+				if not message:
 					envoie_message(socket, "Client (%s, %s) est hors ligne" % address)
 					print "Le client (%s, %s) est hors ligne" % address
-					nb_client_conecte =nb_client_conecte -1 # Un client est parti, on décremente
 					socket.close()
 					liste_de_connection.remove(socket)
+				else:
+					envoie_message(socket, "\r" + message)                 
 					continue
-	server.close()
+	irc_sock.close()

@@ -6,12 +6,13 @@ import socket, sys,os,signal,time,select
 '''
 		COTE CLIENT 
 '''
+print("Pour quitter le chat CTRL+C ")
 
 def handler(sig,frame):
 	print"Signal SIGINT recu fermeture du client"
+	sock.close()
 	server.close()
 	sys.exit(0)
-
 #ici on souhaite attraper le signal CTRL C à l'aide du traitant
 signal.signal(signal.SIGINT, handler)
 
@@ -59,15 +60,14 @@ if __name__ == "__main__":
 				# On traite les messages reçu du serveur
 				message = sock.recv(SIZE)
 				if not message :
-					print '\n Deconnection du serveur'
+					print '\n Le serveur est deconnecté '
 					sys.exit()
 				else :
-					#affichier le message
+					#affichier le message rçu par le serveur
 					sys.stdout.write(message)
 			else :
 				# j'envoie un message 
 				msg = sys.stdin.readline()
 				server.send(nom_client +" : " + msg) #nom_client pour afficher le nom au début
 	server.close()
-
 
