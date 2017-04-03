@@ -2,7 +2,6 @@
 #-*- coding: Utf-8 -*-
 
 import socket,sys,os,signal,time,select
-
 # faire attention a la primitive #ACCEPT car elle est BLOQUANTE (cf cours)
 
 '''
