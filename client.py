@@ -16,17 +16,6 @@ def handler(sig,frame):
 #ici on souhaite attraper le signal CTRL C à l'aide du traitant
 signal.signal(signal.SIGINT, handler)
 
-def envoie_message (sock, message):
-	# Cette fonction me permet d'envoyer des messages entre les clients 
-	for socket in liste_de_connection:
-		if socket != server:
-			# on eassaye d'envoyer le message
-			try :
-				socket.send(message)
-			except :
-				# on ferme la connection et on supprime des clients des connections
-				socket.close()
-				liste_de_connection.remove(socket)
 
 if __name__ == "__main__":
 
@@ -47,6 +36,7 @@ if __name__ == "__main__":
 	# Tentative de connection
 	try :
 		server.connect((ip_client, port_client))
+		
 		print 'Connexion avec le serveur établie : OK'
 	except :
 		print 'Connexion échoué avec le serveur'
