@@ -10,7 +10,6 @@ import socket, sys,os,signal,time,select
 
 def handler(sig,frame):
 	print"Signal SIGINT recu fermeture du client"
-	sock.close()
 	server.close()
 	sys.exit(0)
 #ici on souhaite attraper le signal CTRL C à l'aide du traitant
@@ -22,7 +21,7 @@ if __name__ == "__main__":
 	# nombre des arguments est insuffisant
 	if(len(sys.argv) < 4):
 		# print "Test du nombre d'argument coté client a échoué, dans l'ordre : IP_CLIENT, PORT_CLIENT, NOM_CLIENT "
-		sys.exit()
+		sys.exit(1)
 
 	# print "Test nombre d'argument client: OK"
 	liste_de_connection = []
