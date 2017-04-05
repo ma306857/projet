@@ -106,6 +106,5 @@ if __name__ == "__main__":
 				liste_web.remove(socket)
 				socket.shutdown(1)
 
-
 	web_sock.close()
 	irc_sock.close()

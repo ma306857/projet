@@ -6,7 +6,7 @@ import socket, sys,os,signal,time,select
 '''
 		COTE CLIENT 
 '''
-print("Pour quitter le chat CTRL+C ")
+# print("Pour quitter le chat CTRL+C ")
 
 def handler(sig,frame):
 	print"Signal SIGINT recu fermeture du client"
@@ -21,10 +21,10 @@ if __name__ == "__main__":
 
 	# nombre des arguments est insuffisant
 	if(len(sys.argv) < 4):
-		print "Test du nombre d'argument coté client a échoué, dans l'ordre : IP_CLIENT, PORT_CLIENT, NOM_CLIENT "
+		# print "Test du nombre d'argument coté client a échoué, dans l'ordre : IP_CLIENT, PORT_CLIENT, NOM_CLIENT "
 		sys.exit()
 
-	print "Test nombre d'argument client: OK"
+	# print "Test nombre d'argument client: OK"
 	liste_de_connection = []
 	SIZE = 4096
 	ip_client = str((sys.argv[1])) # on rentre le numéro de l'ip  : '127.0.0.1'
@@ -37,9 +37,9 @@ if __name__ == "__main__":
 	try :
 		server.connect((ip_client, port_client))
 		
-		print 'Connexion avec le serveur établie : OK'
+		#print 'Connexion avec le serveur établie : OK'
 	except :
-		print 'Connexion échoué avec le serveur'
+		#print 'Connexion échoué avec le serveur'
 		sys.exit()
 
 	while running:

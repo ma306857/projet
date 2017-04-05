@@ -1,28 +1,26 @@
-#!/usr/bin/env zsh
+#!/bin/bash -x
+
+'''
 
 echo "test des paramètres du client"
 
-re='^[0-9]+$'
- echo " "
- echo "Parametre 1: $1"
- if ! [[ $1 =~ $re ]]; then
-    exit 3
- fi
+./client.py 127.0.0.1
 
- echo " "
- echo "paramètre 2: $2"
- if ! [[ $2 =~ $re ]]; then
-    echo "Rentrer le numéro de port."
-    exit 2
- fi
+if [ $? == 0 ]; then
+	echo "Il manque le numéro de port et le nom du client : Test 1 ECHEC"
+fi
 
- re='^[[:graph:]]+$'
- echo " "
- echo "paramètre 3: $3"
- if ! [[ $3 =~ $re ]]; then
-    echo "Entrer votre prénom ."
-    exit 3
- fi
- echo " "
- ./client.py $1 $2 $3
- echo " "
+./client.py 127.0.0.1 5000
+
+if [ $? == 0 ]; then
+ 	echo "Il manque le numéro le nom du client : Test 2 EHCEC"
+fi
+
+./client.py 127.0.0.1 5000 abdou
+
+if [ $? == 0 ]; then
+ 	echo "Il manque le numéro le nom du client : Test 3 EHCEC"
+else
+     echo "Test des paramètres du client: OK"
+fi
+'''
