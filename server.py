@@ -9,7 +9,9 @@ from collections import deque
 '''
 
 def envoie_message (sock, message):
-	# Cette fonction me permet d'envoyer des messages entre les clients 
+	'''
+	Cette fonction me permet d'envoyer des messages entre les clients
+	'''
 	for socket in liste_global:
 		if socket != irc_sock and socket != web_sock:
 			# on eassaye d'envoyer le message
@@ -17,8 +19,9 @@ def envoie_message (sock, message):
 				socket.send(message)
 			except :
 				# on ferme la connection et on supprime le client de la liste des connections
+				liste_global.remove(socket)
 				socket.close()
-				liste_de_connection.remove(socket)
+
 
 # j'ai besoin de la variable à plusieurs de mon programme, il faut garder les valeurs du tableau_content
 global tableau_content
@@ -36,10 +39,10 @@ def sauvegarde_conversation(message):
 if __name__ == "__main__":
 	# nombre des arguments est insuffisant
 	if(len(sys.argv) < 2) :
-		print 'Argument manquant : indiquer le numéro de PORT '
-		sys.exit()
+		#print "Argument manquant : indiquer dans le numéro de PORT, "
+		sys.exit(1)
 
-	print "Test argument serveur : OK"
+	#print "Test argument serveur : OK"
 	liste_de_connection = [] # constitue la liste des sockets qui vont se connecter
 	SIZE = 4096
 	
@@ -83,15 +86,15 @@ if __name__ == "__main__":
 				# On traite les messages reçu du client
 				message = socket.recv(SIZE)
 				sauvegarde_conversation(message) # on sauvegarde ce que je reçois
+				# on travaille ici
 				if not message:
-					envoie_message(socket, "Client (%s, %s) est hors ligne\n" % address)
+					#envoie_message(client, "Client (%s, %s) est hors ligne\n" % address)
 					liste_global.remove(socket) # on supprime le socket dans la liste global
 					liste_irc.remove(socket) # on supprime le socket dans la liste_IRC
 					socket.close()
 				else:
 					envoie_message(socket, "\r" + message)
 					sauvegarde_conversation(message) #on sauvegarde ce que j'envoie
-
 			else:
 				preparation_message = list(tableau_content)
 				cinq_message = [w.replace('\n', '') for w in preparation_message] # on enlève les backslashs dans la liste, produit par ENTER quand le client envoie un message

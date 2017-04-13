@@ -1,6 +1,8 @@
 #!/bin/bash -x
 
-echo "test des paramètres du client"
+echo "Test des paramètres du client"
+
+nc -l 5000&
 
 ./client.py 127.0.0.1
 
@@ -14,10 +16,10 @@ if [ $? != 0 ]; then
  	echo "Il manque le numéro le nom du client : Test 2 EHCEC"
 fi
 
-./client.py 127.0.0.1 5000 abdou
+./client.py 127.0.0.1 5000 abdou&
 
 if [ $? -eq 0 ]; then
      echo "Test des paramètres du client: OK"
 else
- 	echo "Il manque le numéro le nom du client : Test 3 EHCEC"
+ 	echo "Un soucis quelque part : Test 3 EHCEC"
 fi
