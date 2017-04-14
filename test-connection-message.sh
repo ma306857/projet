@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -x
 
 echo "Test de connection et envoi d’un message par un client"
 

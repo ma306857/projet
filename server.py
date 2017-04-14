@@ -43,9 +43,7 @@ if __name__ == "__main__":
 		sys.exit(1)
 
 	#print "Test argument serveur : OK"
-	liste_de_connection = [] # constitue la liste des sockets qui vont se connecter
-	SIZE = 4096
-	
+	SIZE = 4096	
 	HOST = '127.0.0.1' #localhost
 	
 	PORT = int(sys.argv[1]) #int par ce que sys.argv[] rend un str, Ici on rentre le numéro du port
